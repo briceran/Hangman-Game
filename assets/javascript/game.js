@@ -85,6 +85,7 @@ window.onload = function() {
         PublicWord = [];
         guessesRemaining = 6;
         updateImage(guessesRemaining);
+        logArray = [];
         for (var i = 0; i < word.length; i++) {
           PublicWord.push("-");
         }
@@ -93,26 +94,7 @@ window.onload = function() {
       }
 
 
-      //check win
-      var counter = 0;
-      for (var i = 0; i < PublicWord.length; i++) {
-        if(PublicWord[i] !== "-"){counter++;}
-      }
-      if(counter===PublicWord.length){
-        wins++;
-        console.log("Winner!!");
-        word = generateWord(); //maybe
-        PublicWord = [];
-        guessesRemaining = 6;
-        updateImage(guessesRemaining);
-        document.getElementById("guessesRemaining").innerHTML = "Guesses Remaining : "+guessesRemaining;
 
-        for (var i = 0; i < word.length; i++) {
-          PublicWord.push("-");
-        }
-        document.getElementById("pubWord").innerHTML = PublicWord.join(" ");
-
-      }
 
 
       userInput = event.key;
@@ -132,7 +114,7 @@ window.onload = function() {
         //if the user guessed incorrectly, decrement guessesRemaining
         if (!status && guessesRemaining>=0){
           guessesRemaining--;
-          document.getElementById("guessesRemaining").innerHTML = "Guesses Remaining "+guessesRemaining;
+          document.getElementById("guessesRemaining").innerHTML = "Guesses Remaining : "+guessesRemaining;
 
           updateImage(guessesRemaining);
 
@@ -141,12 +123,31 @@ window.onload = function() {
         console.log(currentList);
 
         document.getElementById("guessed").innerHTML = currentList;
-        document.getElementById("userInput").innerHTML = "You choose:"+userInput;
+        document.getElementById("userInput").innerHTML = "You chose : "+userInput;
 
       }
-      // if(){
-      //   wins++;
-      // }
+      //check win
+      var counter = 0;
+      for (var i = 0; i < PublicWord.length; i++) {
+        if(PublicWord[i] !== "-"){counter++;}
+      }
+      if(counter===PublicWord.length){
+        wins++;
+        document.getElementById("wins").innerHTML = "Wins : "+wins;
+
+        word = generateWord(); //maybe
+        PublicWord = [];
+        guessesRemaining = 6;
+        updateImage(guessesRemaining);
+        logArray = [];
+        document.getElementById("guessesRemaining").innerHTML = "Guesses Remaining : "+guessesRemaining;
+
+        for (var i = 0; i < word.length; i++) {
+          PublicWord.push("-");
+        }
+        document.getElementById("pubWord").innerHTML = PublicWord.join(" ");
+
+      }
   }//end on key up
 
 }//end onload
