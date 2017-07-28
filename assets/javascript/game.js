@@ -1,12 +1,12 @@
 /*
  Hangman Game
+ Brice Randolph
 */
 
 var wins = 0;
-var PublicWord = [];
-var logArray = [];
+var PublicWord = [];  //word displayed on screen
+var logArray = [];  //used to hold guessed letters
 
-//functions
 
 //function returns boolean: updates word on screen
 //
@@ -58,6 +58,8 @@ function allLetters(input) {
      }
   }
 
+
+//generates a word from list words
 function generateWord(){
   var words = ["skateboard", "trucks", "wheels","deck","halfpipe","kickflip","heelflip","impossible","manual"];
   var num = Math.floor(Math.random()*words.length);
@@ -68,12 +70,11 @@ function generateWord(){
 
 
 window.onload = function() {
-    // all of your code goes in here
-    // it runs after the DOM is built
+    // runs after the DOM is built
 
     var guessesRemaining = 6;
     var word = generateWord();
-    for (var i = 0; i < word.length; i++) {
+    for (var i = 0; i < word.length; i++) { //generate hidden word on page
       PublicWord.push("-");
     }
     document.getElementById("pubWord").innerHTML = PublicWord.join(" ");
@@ -94,11 +95,8 @@ window.onload = function() {
       }
 
 
-
-
-
       userInput = event.key;
-
+      // check to make sure the user gave a valid letter
       if (allLetters(userInput) && userInput.length===1 ){
         logArray.push(userInput);
         var currentList = "Letters Already Guessed: ";
@@ -107,10 +105,8 @@ window.onload = function() {
           currentList+=" ";
 
         }
-        console.log(word);
-        console.log(PublicWord);
-        var status = check(userInput,word);
 
+        var status = check(userInput,word);
         //if the user guessed incorrectly, decrement guessesRemaining
         if (!status && guessesRemaining>=0){
           guessesRemaining--;
@@ -118,15 +114,16 @@ window.onload = function() {
 
           updateImage(guessesRemaining);
 
-        }
-        console.log(guessesRemaining);
-        console.log(currentList);
+          }
 
         document.getElementById("guessed").innerHTML = currentList;
         document.getElementById("userInput").innerHTML = "You chose : "+userInput;
 
       }
-      //check win
+
+      //
+      // check win
+      //
       var counter = 0;
       for (var i = 0; i < PublicWord.length; i++) {
         if(PublicWord[i] !== "-"){counter++;}
